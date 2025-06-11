@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSA Anahtarı Oluştur | KriptoMaster</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #7c3aed;
+      --primary-light: #8b5cf6;
+      --primary-dark: #6d28d9;
+      --secondary: #10b981;
+      --secondary-dark: #059669;
+      --dark: #0f172a;
+      --darker: #020617;
+      --light: #f8fafc;
+      --gray: #94a3b8;
+      --dark-gray: #475569;
+      --card-bg: #1e293b;
+      --border: #334155;
+      --success: #10b981;
+      --error: #ef4444;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--dark);
+      color: var(--light);
+      font-family: 'Tajawal', sans-serif;
+      line-height: 1.6;
+      padding: 0;
+      margin: 0;
+      min-height: 100vh;
+      background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.1) 0%, rgba(124, 58, 237, 0) 90%);
+      position: relative;
+    }
+
+    /* Matrix Rain Arka Plan Efekti - DÜZELTME */
+    #matrix-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.15;
+      pointer-events: none; /* Bu satırı ekledik */
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Diğer stiller aynı kalıyor... */
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+      padding-top: 1rem;
+      position: relative;
+    }
+
+    h1 {
+      color: var(--light);
+      font-size: 2.75rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      color: var(--gray);
+      font-size: 1.15rem;
+      font-weight: 400;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .developer {
+      position: absolute;
+      top: 0;
+      left: 1rem;
+      color: var(--gray);
+      font-size: 0.85rem;
+    }
+
+    .back-btn {
+      position: absolute;
+      top: 0;
+      right: 1rem;
+      color: var(--gray);
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .back-btn:hover {
+      color: var(--primary);
+    }
+
+    .tool-container {
+      background-color: var(--card-bg);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--border);
+      margin-bottom: 2rem;
+    }
+
+    .tool-title {
+      color: var(--light);
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .tool-title i {
+      color: var(--primary);
+    }
+
+    .input-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--light);
+      font-weight: 500;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      background-color: var(--darker);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--light);
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.3);
+    }
+
+    .btn {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.85rem 1.75rem;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1rem;
+      text-decoration: none;
+      margin-top: 0.5rem;
+    }
+
+    .btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn-secondary {
+      background-color: var(--secondary);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--secondary-dark);
+    }
+
+    .btn-block {
+      display: block;
+      width: 100%;
+    }
+
+    .result-container {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background-color: var(--darker);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      position: relative;
+    }
+
+    .result-title {
+      color: var(--primary);
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .copy-btn {
+      background-color: var(--dark-gray);
+      color: var(--light);
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .copy-btn:hover {
+      background-color: var(--primary);
+    }
+
+    .key-pair-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 1.5rem 1rem;
+      }
+      
+      h1 {
+        font-size: 2rem;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      
+      .developer {
+        position: static;
+        margin-top: 1rem;
+      }
+      
+      .key-pair-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Matrix Rain Arka Plan -->
+  <canvas id="matrix-canvas"></canvas>
+
+  <div class="container">
+    <header>
+      <a href="index.html" class="back-btn">
+        <i class="fas fa-arrow-right"></i>
+        Ana Sayfa
+      </a>
+      <h1>
+        <i class="fas fa-key"></i>
+        RSA Anahtarı Oluştur
+      </h1>
+      <p class="subtitle">2048 bit RSA şifreleme için genel ve özel anahtar çifti oluşturma</p>
+      <div class="developer">Geliştiren: İmran Seyyidali</div>
+    </header>
+
+    <div class="tool-container">
+      <h2 class="tool-title">
+        <i class="fas fa-key"></i>
+        Anahtar Oluşturma Ayarları
+      </h2>
+
+      <div class="input-group">
+        <label for="key-size">Anahtar Boyutu (bit)</label>
+        <select id="key-size">
+          <option value="2048" selected>2048 bit </option>
+          <option value="1024">1024 bit</option>
+          <option value="4096">4096 bit</option>
+        </select>
+      </div>
+
+      <button id="generate-btn" class="btn btn-block">
+        <i class="fas fa-key"></i>
+        Anahtarları Oluştur
+      </button>
+
+      <div id="result" style="display: none;">
+        <div class="key-pair-container">
+          <div class="result-container">
+            <h3 class="result-title">
+              Genel Anahtar
+              <button class="copy-btn" onclick="copyToClipboard('public-key')">
+                <i class="far fa-copy"></i>
+                Kopyala
+              </button>
+            </h3>
+            <textarea id="public-key" class="result-text" readonly></textarea>
+          </div>
+
+          <div class="result-container">
+            <h3 class="result-title">
+              Özel Anahtar
+              <button class="copy-btn" onclick="copyToClipboard('private-key')">
+                <i class="far fa-copy"></i>
+                Kopyala
+              </button>
+            </h3>
+            <textarea id="private-key" class="result-text" readonly></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>KriptoMaster &copy; 2025 | Tüm hakları saklıdır</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/3.3.2/jsencrypt.min.js"></script>
+  <script>
+    // Matrix Rain Efekti
+    const canvas = document.getElementById('matrix-canvas');
+    const ctx = canvas.getContext('2d');
+    
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    const turkishChars = "01ĞğİıÖöŞşÜüÇçÂâÊêÎîÔôÛû";
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops = Array(Math.floor(columns)).fill(1);
+    
+    function drawMatrix() {
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      ctx.fillStyle = '#7c3aed';
+      ctx.font = fontSize + 'px monospace';
+      
+      for (let i = 0; i < drops.length; i++) {
+        const text = turkishChars[Math.floor(Math.random() * turkishChars.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        
+        drops[i]++;
+      }
+    }
+    
+    setInterval(drawMatrix, 33);
+    
+    // Pencere boyutu değiştiğinde canvas'ı yeniden boyutlandır
+    window.addEventListener('resize', function() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    // Sayfa yüklendiğinde önceki anahtarları kontrol et
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedPublicKey = localStorage.getItem('rsaPublicKey');
+      const savedPrivateKey = localStorage.getItem('rsaPrivateKey');
+      
+      if (savedPublicKey && savedPrivateKey) {
+        document.getElementById('public-key').value = savedPublicKey;
+        document.getElementById('private-key').value = savedPrivateKey;
+        document.getElementById('result').style.display = 'block';
+      }
+    });
+
+    document.getElementById('generate-btn').addEventListener('click', function() {
+      const keySize = parseInt(document.getElementById('key-size').value);
+      
+      // Yükleme mesajını göster
+      this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Anahtarlar oluşturuluyor...';
+      this.disabled = true;
+      
+      // Arayüzün güncellenmesi için setTimeout kullanımı
+      setTimeout(() => {
+        const crypt = new JSEncrypt({default_key_size: keySize});
+        crypt.getKey();
+        
+        const publicKey = crypt.getPublicKey();
+        const privateKey = crypt.getPrivateKey();
+        
+        // Anahtarları sayfada göster
+        document.getElementById('public-key').value = publicKey;
+        document.getElementById('private-key').value = privateKey;
+        document.getElementById('result').style.display = 'block';
+        
+        // Anahtarları localStorage'a kaydet
+        localStorage.setItem('rsaPublicKey', publicKey);
+        localStorage.setItem('rsaPrivateKey', privateKey);
+        
+        this.innerHTML = '<i class="fas fa-key"></i> Anahtarlar oluşturuldu';
+        this.disabled = false;
+      }, 100);
+    });
+    
+    function copyToClipboard(id) {
+      const textarea = document.getElementById(id);
+      textarea.select();
+      document.execCommand('copy');
+      
+      // Onay mesajını göster
+      const copyBtn = event.target.closest('button');
+      const originalText = copyBtn.innerHTML;
+      copyBtn.innerHTML = '<i class="fas fa-check"></i> Kopyalandı!';
+      
+      setTimeout(() => {
+        copyBtn.innerHTML = originalText;
+      }, 2000);
+    }
+  </script>
+</body>
+</html>

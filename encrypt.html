@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSA Şifreleme | KriptoMaster</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #7c3aed;
+      --primary-light: #8b5cf6;
+      --primary-dark: #6d28d9;
+      --secondary: #10b981;
+      --secondary-dark: #059669;
+      --dark: #0f172a;
+      --darker: #020617;
+      --light: #f8fafc;
+      --gray: #94a3b8;
+      --dark-gray: #475569;
+      --card-bg: #1e293b;
+      --border: #334155;
+      --success: #10b981;
+      --error: #ef4444;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--dark);
+      color: var(--light);
+      font-family: 'Tajawal', sans-serif;
+      line-height: 1.6;
+      padding: 0;
+      margin: 0;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      background-image: radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.1) 0%, rgba(124, 58, 237, 0) 90%);
+    }
+
+    #matrix-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.15;
+      pointer-events: none;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+      position: relative;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+      padding-top: 1rem;
+      position: relative;
+    }
+
+    h1 {
+      color: var(--light);
+      font-size: 2.75rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      color: var(--gray);
+      font-size: 1.15rem;
+      font-weight: 400;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .developer {
+      position: absolute;
+      top: 0;
+      left: 1rem;
+      color: var(--gray);
+      font-size: 0.85rem;
+    }
+
+    .back-btn {
+      position: absolute;
+      top: 0;
+      right: 1rem;
+      color: var(--gray);
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .back-btn:hover {
+      color: var(--primary);
+    }
+
+    .tool-card {
+      background-color: var(--card-bg);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--border);
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tool-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--secondary));
+    }
+
+    .tool-title {
+      color: var(--light);
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .tool-title i {
+      color: var(--primary);
+    }
+
+    .input-group {
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--light);
+      font-weight: 500;
+    }
+
+    .input-group textarea {
+      width: 100%;
+      padding: 1rem;
+      background-color: var(--darker);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--light);
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .input-group textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.3);
+    }
+
+    .btn {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.85rem 1.75rem;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1rem;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn-block {
+      display: block;
+      width: 100%;
+    }
+
+    .btn-secondary {
+      background-color: var(--secondary);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--secondary-dark);
+    }
+
+    .result-container {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background-color: rgba(28, 42, 66, 0.7);
+      border-radius: 10px;
+      border: 1px solid var(--primary);
+      position: relative;
+      display: none;
+      box-shadow: 0 0 15px rgba(124, 58, 237, 0.2);
+    }
+
+    .result-title {
+      color: var(--primary);
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    #encrypted-result {
+      width: 100%;
+      padding: 1rem;
+      background-color: rgba(16, 24, 39, 0.5);
+      border: 1px solid var(--primary-dark);
+      border-radius: 8px;
+      color: var(--light);
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      resize: none;
+      min-height: 120px;
+    }
+
+    .copy-btn {
+      background: linear-gradient(to right, var(--primary), var(--primary-light));
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .copy-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(124, 58, 237, 0.3);
+    }
+
+    .alert {
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      display: none;
+    }
+
+    .alert-error {
+      background-color: rgba(239, 68, 68, 0.1);
+      border: 1px solid var(--error);
+      color: var(--error);
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 1.5rem 1rem;
+      }
+      
+      h1 {
+        font-size: 2rem;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      
+      .developer {
+        position: static;
+        margin-top: 1rem;
+      }
+      
+      .tool-card {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="matrix-bg"></canvas>
+  
+  <div class="container">
+    <header>
+      <a href="index.html" class="back-btn">
+        <i class="fas fa-arrow-right"></i>
+        Ana Sayfa
+      </a>
+      <h1>
+        <i class="fas fa-lock"></i>
+        RSA Şifreleme
+      </h1>
+      <p class="subtitle">RSA algoritması ile genel anahtar kullanarak metin şifreleme</p>
+      <div class="developer">Geliştiren: İmran Seyyidali</div>
+    </header>
+
+    <div class="tool-card">
+      <h2 class="tool-title">
+        <i class="fas fa-lock"></i>
+        Metin Şifreleme
+      </h2>
+
+      <div class="input-group">
+        <label for="public-key">Genel Anahtar</label>
+        <textarea id="public-key" placeholder="-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA..."></textarea>
+      </div>
+
+      <div class="input-group">
+        <label for="plain-text">Orijinal Metin</label>
+        <textarea id="plain-text" placeholder="Şifrelemek istediğiniz metni buraya girin..."></textarea>
+      </div>
+
+      <button id="encrypt-btn" class="btn btn-block">
+        <i class="fas fa-lock"></i>
+        Metni Şifrele
+      </button>
+
+      <div id="error-alert" class="alert alert-error" style="display: none;">
+        <i class="fas fa-exclamation-circle"></i>
+        <span id="error-message"></span>
+      </div>
+
+      <div id="result-container" class="result-container">
+        <h3 class="result-title">
+          <i class="fas fa-key"></i>
+          Şifrelenmiş Metin
+        </h3>
+        <textarea id="encrypted-result" readonly></textarea>
+
+        <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+          <button id="copy-encrypted-btn" class="btn copy-btn" style="flex: 1;">
+            <i class="fas fa-copy"></i>
+            Kopyala
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>KriptoMaster &copy; 2025 | Tüm hakları saklıdır</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/3.3.2/jsencrypt.min.js"></script>
+  <script>
+    // Matrix Rain Arka Plan
+    document.addEventListener('DOMContentLoaded', function() {
+      const canvas = document.getElementById('matrix-bg');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const chars = "01 1010 1101 0110 1001 1010";
+      const fontSize = 14;
+      const columns = canvas.width / fontSize;
+      const drops = Array(Math.floor(columns)).fill(0);
+
+      function draw() {
+        ctx.fillStyle = 'rgba(16, 24, 39, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#7c3aed';
+        ctx.font = `${fontSize}px monospace`;
+
+        drops.forEach((drop, i) => {
+          const text = chars[Math.floor(Math.random() * chars.length)];
+          ctx.fillText(text, i * fontSize, drop * fontSize);
+          if (drop * fontSize > canvas.height || Math.random() > 0.95) {
+            drops[i] = 0;
+          }
+          drops[i]++;
+        });
+      }
+
+      setInterval(draw, 50);
+
+      window.addEventListener('resize', function() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      });
+
+      // Diğer fonksiyonlar...
+      const savedPublicKey = localStorage.getItem('rsaPublicKey');
+      const savedPlainText = localStorage.getItem('rsaPlainText');
+      const savedEncryptedText = localStorage.getItem('rsaEncryptedText');
+
+      if (savedPublicKey) {
+        document.getElementById('public-key').value = savedPublicKey;
+      }
+      
+      if (savedPlainText) {
+        document.getElementById('plain-text').value = savedPlainText;
+      }
+      
+      if (savedEncryptedText) {
+        document.getElementById('encrypted-result').value = savedEncryptedText;
+        document.getElementById('result-container').style.display = 'block';
+      }
+
+      document.getElementById('public-key').addEventListener('input', function() {
+        localStorage.setItem('rsaPublicKey', this.value);
+      });
+
+      document.getElementById('plain-text').addEventListener('input', function() {
+        localStorage.setItem('rsaPlainText', this.value);
+      });
+
+      document.getElementById('encrypt-btn').addEventListener('click', function() {
+        const publicKey = document.getElementById('public-key').value.trim();
+        const plainText = document.getElementById('plain-text').value.trim();
+        
+        if (!publicKey) {
+          showError('Lütfen genel anahtarı girin');
+          return;
+        }
+        
+        if (!plainText) {
+          showError('Lütfen şifrelenecek metni girin');
+          return;
+        }
+        
+        encryptText(publicKey, plainText);
+      });
+
+      function encryptText(publicKey, plainText) {
+        const btn = document.getElementById('encrypt-btn');
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Şifreleniyor...';
+        btn.disabled = true;
+        hideError();
+        
+        setTimeout(() => {
+          try {
+            const encrypt = new JSEncrypt();
+            encrypt.setPublicKey(publicKey);
+            
+            const encrypted = encrypt.encrypt(plainText);
+            
+            if (encrypted) {
+              showResult(encrypted);
+              localStorage.setItem('rsaEncryptedText', encrypted);
+            } else {
+              showError('Şifreleme başarısız. Genel anahtarın doğru olduğundan emin olun.');
+            }
+          } catch (e) {
+            showError('Şifreleme sırasında hata oluştu: ' + e.message);
+          }
+          
+          btn.innerHTML = '<i class="fas fa-lock"></i> Metni Şifrele';
+          btn.disabled = false;
+        }, 100);
+      }
+
+      function showResult(encryptedText) {
+        const resultContainer = document.getElementById('result-container');
+        const encryptedResult = document.getElementById('encrypted-result');
+        
+        encryptedResult.value = encryptedText;
+        resultContainer.style.display = 'block';
+        resultContainer.scrollIntoView({ behavior: 'smooth' });
+      }
+
+      function showError(message) {
+        const errorAlert = document.getElementById('error-alert');
+        const errorMessage = document.getElementById('error-message');
+        
+        errorMessage.textContent = message;
+        errorAlert.style.display = 'flex';
+        errorAlert.scrollIntoView({ behavior: 'smooth' });
+      }
+
+      function hideError() {
+        document.getElementById('error-alert').style.display = 'none';
+      }
+
+      document.getElementById('copy-encrypted-btn').addEventListener('click', function() {
+        const encryptedText = document.getElementById('encrypted-result').value;
+        
+        navigator.clipboard.writeText(encryptedText).then(() => {
+          const copyBtn = this;
+          const originalText = copyBtn.innerHTML;
+          copyBtn.innerHTML = '<i class="fas fa-check"></i> Kopyalandı!';
+          
+          setTimeout(() => {
+            copyBtn.innerHTML = originalText;
+          }, 2000);
+        });
+      });
+
+      document.querySelector('.back-btn').addEventListener('click', function() {
+        localStorage.removeItem('rsaPublicKey');
+        localStorage.removeItem('rsaPlainText');
+        localStorage.removeItem('rsaEncryptedText');
+      });
+    });
+  </script>
+</body>
+</html>

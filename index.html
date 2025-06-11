@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KriptoMaster | Kapsamlı Şifreleme Aracı</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #7c3aed;
+      --primary-light: #8b5cf6;
+      --primary-dark: #6d28d9;
+      --secondary: #10b981;
+      --secondary-dark: #059669;
+      --dark: #0f172a;
+      --darker: #020617;
+      --light: #f8fafc;
+      --gray: #94a3b8;
+      --dark-gray: #475569;
+      --card-bg: #1e293b;
+      --border: #334155;
+      --success: #10b981;
+      --error: #ef4444;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--dark);
+      color: var(--light);
+      font-family: 'Tajawal', sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      position: relative;
+    }
+
+   
+    #matrix-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.15;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+      padding-top: 1rem;
+      position: relative;
+    }
+
+    h1 {
+      color: var(--light);
+      font-size: 2.75rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      color: var(--gray);
+      font-size: 1.15rem;
+      font-weight: 400;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .developer {
+      position: absolute;
+      top: 0;
+      left: 1rem;
+      color: var(--gray);
+      font-size: 0.85rem;
+    }
+
+    .main-menu {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .menu-card {
+      background-color: var(--card-bg);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 300px;
+    }
+
+    .menu-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary), var(--secondary));
+    }
+
+    .menu-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+    }
+
+    .menu-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      font-size: 2rem;
+      color: white;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+    }
+
+    .menu-title {
+      color: var(--light);
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .menu-desc {
+      color: var(--gray);
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+      flex-grow: 1;
+    }
+
+    .btn {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.85rem 1.75rem;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1rem;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn-secondary {
+      background-color: var(--secondary);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--secondary-dark);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 4rem;
+      padding: 2rem 1.5rem;
+      color: var(--gray);
+      font-size: 0.95rem;
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 1.5rem 1rem;
+      }
+      
+      h1 {
+        font-size: 2rem;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      
+      .developer {
+        position: static;
+        margin-top: 1rem;
+      }
+      
+      .menu-card {
+        min-height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+ 
+  <canvas id="matrix-bg"></canvas>
+  
+  <div class="container">
+    <header>
+      <h1>
+        <i class="fas fa-lock"></i>
+        KriptoMaster
+      </h1>
+      <p class="subtitle">Şifreleme, şifre çözme ve dijital parmak izi oluşturma için kapsamlı araç</p>
+      <div class="developer">Geliştiren: İmran Seyyidali</div>
+    </header>
+
+    <div class="main-menu">
+      <!-- RSA Anahtar Üretme -->
+      <div class="menu-card">
+        <div class="menu-icon">
+          <i class="fas fa-key"></i>
+        </div>
+        <h3 class="menu-title">RSA Anahtar Üretme</h3>
+        <p class="menu-desc">2048 bit RSA şifreleme için genel ve özel anahtar çifti oluşturma</p>
+        <a href="generate-keys.html" class="btn">
+          <i class="fas fa-arrow-right"></i>
+          Araca Git
+        </a>
+      </div>
+
+      <!-- RSA Şifreleme -->
+      <div class="menu-card">
+        <div class="menu-icon">
+          <i class="fas fa-lock"></i>
+        </div>
+        <h3 class="menu-title">RSA Şifreleme</h3>
+        <p class="menu-desc">RSA algoritması ile genel anahtar kullanarak metin şifreleme</p>
+        <a href="encrypt.html" class="btn btn-secondary">
+          <i class="fas fa-arrow-right"></i>
+          Araca Git
+        </a>
+      </div>
+
+      <!-- RSA Şifre Çözme -->
+      <div class="menu-card">
+        <div class="menu-icon">
+          <i class="fas fa-unlock"></i>
+        </div>
+        <h3 class="menu-title">RSA Şifre Çözme</h3>
+        <p class="menu-desc">RSA özel anahtarı kullanarak şifrelenmiş metinleri çözme</p>
+        <a href="decrypt.html" class="btn btn-secondary">
+          <i class="fas fa-arrow-right"></i>
+          Araca Git
+        </a>
+      </div>
+
+      <!-- SHA-256 Parmak İzi -->
+      <div class="menu-card">
+        <div class="menu-icon">
+          <i class="fas fa-fingerprint"></i>
+        </div>
+        <h3 class="menu-title">SHA-256 Özeti</h3>
+        <p class="menu-desc">SHA-256 algoritması kullanarak metin veya dosyalar için dijital parmak izi oluşturma</p>
+        <a href="hash.html" class="btn">
+          <i class="fas fa-arrow-right"></i>
+          Araca Git
+        </a>
+      </div>
+    </div>
+
+    <footer>
+      <p>KriptoMaster &copy; 2025 | Tüm hakları saklıdır</p>
+    </footer>
+  </div>
+
+  <script>
+ 
+    const canvas = document.getElementById('matrix-bg');
+    const ctx = canvas.getContext('2d');
+    
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = document.body.scrollHeight;
+    }
+    
+    resizeCanvas();
+    
+    const binary = '01';
+    const columns = Math.floor(canvas.width / 20);
+    const drops = [];
+    
+    for (let i = 0; i < columns; i++) {
+      drops[i] = Math.random() * -100;
+    }
+    
+    function drawMatrix() {
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.03)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      ctx.fillStyle = '#7c3aed';
+      ctx.font = '15px monospace';
+      
+      for (let i = 0; i < drops.length; i++) {
+        const text = binary.charAt(Math.floor(Math.random() * binary.length));
+        const x = i * 20;
+        const y = drops[i] * 20;
+        
+        ctx.fillText(text, x, y);
+        
+        if (y > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+    
+    setInterval(drawMatrix, 50);
+    
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+    });
+  </script>
+</body>
+</html>
