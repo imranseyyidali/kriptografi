@@ -3,6 +3,7 @@ KriptoMaster
 
 
 Ana sayfa
+![image](https://github.com/user-attachments/assets/aa483a1b-33dd-47bb-ba01-e8e23f943652)
 
 ![image](https://github.com/user-attachments/assets/de723be2-8ab0-4444-9528-5e162fa5f368)
 
