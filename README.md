@@ -9,15 +9,18 @@ Ana sayfa
 
 
 RSA Anahtarı Oluştur
-![image](https://github.com/user-attachments/assets/de723be2-8ab0-4444-9528-5e162fa5f368)
+![image](https://github.com/user-attachments/assets/956f8b9e-8b22-485b-810c-d1eaec295d62)
+
 
 
 
 RSA Şifreleme
-![image](https://github.com/user-attachments/assets/0963f8de-d4e2-479a-83c1-e938c1f16683)
+![image](https://github.com/user-attachments/assets/f325d16a-0c5e-4903-ba89-3617989f660e)
+
 
 RSA Şifre Çözme
-![image](https://github.com/user-attachments/assets/7fb0eee0-5306-475b-b1b0-3ca74dccab6d)
+![image](https://github.com/user-attachments/assets/ab75f95e-3a4b-430a-b6b9-0b951844b6a2)
+
 
 SHA-256 Özet (Metin)
 ![image](https://github.com/user-attachments/assets/42d229d6-8f23-4338-a4a5-6176bedd31e2)
