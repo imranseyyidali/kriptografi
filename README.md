@@ -35,6 +35,8 @@ SHA-256 Özet Bu seçenekte metni şifreleyebilir ve anahtarı şifreleyebilirsi
 ![image](https://github.com/user-attachments/assets/4f5f5fe6-9ad6-45d7-8d30-a08b12d2f604)
 ### -Sonuç:
 ![image](https://github.com/user-attachments/assets/5afad576-6824-43ae-9ef3-d0d7ab837918)
+### denemek için bu linke tıklayınız 
+https://imranseyyidali.github.io/kriptografi/
 
 
 
