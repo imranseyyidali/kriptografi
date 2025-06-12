@@ -19,6 +19,7 @@ Yukarıdaki görselde. Burada anahtarın boyutunu seçmeniz gerekir ve size bir 
 
 ### RSA Şifreleme
 ![image](https://github.com/user-attachments/assets/f325d16a-0c5e-4903-ba89-3617989f660e)
+RSA Şifreleme'de, RSA Anahtarı Oluştur'dan çıkardığınız açık anahtarı koymanız ve şifrelenecek orijinal cümleyi girmeniz gerekir, ardından kod görünecek ve kopyalayabilirsiniz
 
 
 ### RSA Şifre Çözme
