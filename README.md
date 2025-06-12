@@ -1,7 +1,7 @@
 
-<p align="center">
-  ### KriptoMaster
-</p>
+<h" align="center">
+  KriptoMaster
+</h1>
 
 Bu proje, RSA şifreleme algoritması ve SHA-256 özetleme fonksiyonu kullanılarak geliştirilmiş kapsamlı bir kriptografi uygulamasıdır.
 
