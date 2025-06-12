@@ -5,11 +5,11 @@ KriptoMaster
 Ana sayfa
 ![image](https://github.com/user-attachments/assets/aa483a1b-33dd-47bb-ba01-e8e23f943652)
 
-![image](https://github.com/user-attachments/assets/de723be2-8ab0-4444-9528-5e162fa5f368)
+
 
 
 RSA Anahtarı Oluştur
-![image](https://github.com/user-attachments/assets/e5fbd65f-4bc5-4bfc-86d9-2e1981b477b8)
+![image](https://github.com/user-attachments/assets/de723be2-8ab0-4444-9528-5e162fa5f368)
 
 
 
