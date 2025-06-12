@@ -5,7 +5,7 @@ Bu proje, RSA şifreleme algoritması ve SHA-256 özetleme fonksiyonu kullanıla
 Ana sayfa
 ![image](https://github.com/user-attachments/assets/aa483a1b-33dd-47bb-ba01-e8e23f943652)
 
-
+Bu, RSA Anahtarı Oluşturma ve RSA Şifreleme ve RSA Şifre Çözme ve SHA-256 Özet'e erişebileceğiniz proje arayüzüdür
 
 
 RSA Anahtarı Oluştur
