@@ -10,7 +10,7 @@ Ana sayfa
 
 RSA Anahtarı Oluştur
 ![image](https://github.com/user-attachments/assets/956f8b9e-8b22-485b-810c-d1eaec295d62)
-
+Yukarıdaki görselde. Burada anahtarın boyutunu seçmeniz gerekir ve size bir özel anahtar ve bir genel anahtar gösterecektir.
 
 
 
