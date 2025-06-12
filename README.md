@@ -24,7 +24,7 @@ RSA Şifreleme'de, RSA Anahtarı Oluştur'dan çıkardığınız açık anahtar�
 
 ### RSA Şifre Çözme
 ![image](https://github.com/user-attachments/assets/ab75f95e-3a4b-430a-b6b9-0b951844b6a2)
-
+Bu RSA Şifre Çözme seçeneğinde, RSA Şifreleme RSA Şifre Çözme'de yaptığınız şifrelemeyi çözebilirsiniz, özel anahtarı ve oluşturduğunuz şifreli metni girmeniz gerekir ve ardından şifreleme çözülür.
 
 ### SHA-256 Özet (Metin)
 ![image](https://github.com/user-attachments/assets/42d229d6-8f23-4338-a4a5-6176bedd31e2)
