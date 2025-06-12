@@ -1,5 +1,5 @@
 
-<h" align="center">
+<h1" align="center">
   KriptoMaster
 </h1>
 
